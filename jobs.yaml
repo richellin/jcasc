@@ -1,8 +1,8 @@
 # ジョブ設定
 jobs:
   - script: > # script指定
-      job('test-from-remote-job') {
-          description('定期実行 確認')
+      job('test-from-remote-job2') {
+          description('定期実行 確認2')
           keepDependencies(false) //Protects all builds that are referenced from builds of this project (via fingerprint) from log rotation.
           parameters {
               stringParam('args_user1','','')
@@ -18,6 +18,6 @@ jobs:
           }
           concurrentBuild(true) //Allows Jenkins to schedule and execute multiple builds concurrently.
           steps  {
-              shell("echo test-from-remote-job; echo '定期実行 確認'; echo success!")
+              shell("echo test-from-remote-job2; echo '定期実行 確認2'; echo success!")
           }
       }

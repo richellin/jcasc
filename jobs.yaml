@@ -1,0 +1,23 @@
+# ジョブ設定
+jobs:
+  - script: > # script指定
+      job('test-from-remote-job') {
+          description('定期実行 確認')
+          keepDependencies(false) //Protects all builds that are referenced from builds of this project (via fingerprint) from log rotation.
+          parameters {
+              stringParam('args_user1','','')
+          }
+          logRotator {
+              daysToKeep(-1) //Sets the number of days to keep old items. Defaults to -1.
+              numToKeep(10)  //If specified, only up to this number of build records are kept.
+              artifactDaysToKeep(-1) //If specified, artifacts from builds older than this number of days will be deleted, but the logs, history, reports, etc for the build will be kept.
+              artifactNumToKeep(-1) //If specified, only up to this number of builds have their artifacts retained.
+          }
+          triggers {
+              cron('H/30 * * * *') //定期実行
+          }
+          concurrentBuild(true) //Allows Jenkins to schedule and execute multiple builds concurrently.
+          steps  {
+              shell("echo test-from-remote-job; echo '定期実行 確認'; echo success!")
+          }
+      }
